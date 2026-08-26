@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crypto News Digest - a3f79b</title>
+<!-- fp:a3f79b -->
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: #0a0a0f;
+    color: #e0e0e0;
+    font-family: 'Commissioner', -apple-system, sans-serif;
+    min-height: 100vh;
+    padding: 20px;
+}
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+/* Header */
+.header {
+    text-align: center;
+    padding: 40px 20px 30px;
+    background: linear-gradient(135deg, rgba(103, 232, 249, 0.08) 0%, rgba(168, 85, 247, 0.08) 100%);
+    border-radius: 24px;
+    margin-bottom: 30px;
+    border: 1px solid rgba(103, 232, 249, 0.15);
+    backdrop-filter: blur(12px);
+}
+.header h1 {
+    font-size: 2.2em;
+    font-weight: 900;
+    background: linear-gradient(135deg, #67e8f9 0%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    letter-spacing: -0.5px;
+}
+.header .subtitle {
+    color: #94a3b8;
+    font-size: 0.95em;
+    margin-top: 8px;
+    font-weight: 400;
+}
+.header .time {
+    color: #67e8f9;
+    font-size: 0.85em;
+    margin-top: 6px;
+    font-weight: 300;
+}
+/* Overview Cards */
+.overview-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+.card {
+    background: linear-gradient(135deg, rgba(20, 20, 35, 0.8) 0%, rgba(30, 15, 40, 0.8) 100%);
+    border: 1px solid rgba(103, 232, 249, 0.12);
+    border-radius: 16px;
+    padding: 24px;
+    backdrop-filter: blur(12px);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(103, 232, 249, 0.1);
+}
+.card .icon { font-size: 1.5em; margin-bottom: 8px; }
+.card .label { color: #94a3b8; font-size: 0.85em; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
+.card .value { font-size: 1.8em; font-weight: 700; margin-top: 4px; }
+.card .change { font-size: 0.9em; margin-top: 4px; font-weight: 500; }
+.up { color: #4ade80; }
+.down { color: #fb7185; }
+.neutral { color: #94a3b8; }
+/* Top 10 table */
+.section-title {
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #67e8f9;
+    margin: 30px 0 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.table-wrap {
+    background: linear-gradient(135deg, rgba(20, 20, 35, 0.6) 0%, rgba(30, 15, 40, 0.6) 100%);
+    border: 1px solid rgba(103, 232, 249, 0.1);
+    border-radius: 16px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+th {
+    text-align: left;
+    padding: 14px 16px;
+    color: #94a3b8;
+    font-weight: 500;
+    font-size: 0.8em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(103, 232, 249, 0.08);
+    background: rgba(0,0,0,0.2);
+}
+td {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(103, 232, 249, 0.05);
+}
+tr:last-child td { border-bottom: none; }
+tr:hover { background: rgba(103, 232, 249, 0.03); }
+.coin-name { font-weight: 600; }
+.coin-symbol { color: #94a3b8; font-size: 0.8em; margin-left: 6px; }
+.price { font-weight: 600; font-variant-numeric: tabular-nums; }
+.text-right { text-align: right; }
+/* Stats row */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+.stat-card {
+    background: linear-gradient(135deg, rgba(20, 20, 35, 0.8) 0%, rgba(30, 15, 40, 0.8) 100%);
+    border: 1px solid rgba(103, 232, 249, 0.1);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    backdrop-filter: blur(12px);
+}
+.stat-card .label { color: #94a3b8; font-size: 0.8em; font-weight: 400; text-transform: uppercase; letter-spacing: 1px; }
+.stat-card .value { font-size: 1.5em; font-weight: 700; margin-top: 6px; }
+.stat-card .sub { font-size: 0.85em; color: #64748b; margin-top: 4px; }
+/* News section */
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+.news-item {
+    background: linear-gradient(135deg, rgba(20, 20, 35, 0.6) 0%, rgba(30, 15, 40, 0.6) 100%);
+    border: 1px solid rgba(103, 232, 249, 0.08);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    transition: border-color 0.2s;
+}
+.news-item:hover {
+    border-color: rgba(103, 232, 249, 0.3);
+}
+.news-badge {
+    flex-shrink: 0;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.7em;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 2px;
+}
+.badge-ct { background: rgba(103, 232, 249, 0.15); color: #67e8f9; }
+.badge-cd { background: rgba(168, 85, 247, 0.15); color: #a855f7; }
+.news-title {
+    flex: 1;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+.news-title a {
+    color: #e0e0e0;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+.news-title a:hover {
+    color: #67e8f9;
+}
+/* Analysis section */
+.analysis {
+    background: linear-gradient(135deg, rgba(20, 20, 35, 0.6) 0%, rgba(30, 15, 40, 0.6) 100%);
+    border: 1px solid rgba(103, 232, 249, 0.1);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 30px;
+    backdrop-filter: blur(12px);
+}
+.analysis h3 {
+    color: #67e8f9;
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+.analysis p {
+    color: #cbd5e1;
+    font-size: 0.9em;
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+.analysis .tag {
+    display: inline-block;
+    background: rgba(251, 191, 36, 0.12);
+    color: #fbbf24;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: 600;
+}
+/* Investment section */
+.investment-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-bottom: 30px;
+}
+.inv-card {
+    background: linear-gradient(135deg, rgba(20, 20, 35, 0.6) 0%, rgba(30, 15, 40, 0.6) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.15);
+    border-radius: 16px;
+    padding: 20px;
+    backdrop-filter: blur(12px);
+}
+.inv-card .coin-header {
+    font-size: 1.1em;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: #a855f7;
+}
+.inv-card .reason {
+    font-size: 0.85em;
+    color: #cbd5e1;
+    line-height: 1.5;
+    margin-bottom: 8px;
+}
+.inv-card .risk {
+    font-size: 0.8em;
+    color: #fb7185;
+    padding: 6px 10px;
+    background: rgba(251, 113, 133, 0.08);
+    border-radius: 8px;
+}
+.disclaimer {
+    background: rgba(251, 191, 36, 0.06);
+    border-left: 3px solid #fbbf24;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.8em;
+    color: #94a3b8;
+    margin-bottom: 30px;
+    line-height: 1.5;
+}
+/* Footer */
+.footer {
+    text-align: center;
+    padding: 30px 0;
+    color: #64748b;
+    font-size: 0.8em;
+    border-top: 1px solid rgba(103, 232, 249, 0.08);
+}
+.footer a { color: #67e8f9; text-decoration: none; }
+.footer a:hover { text-decoration: underline; }
+.source {
+    color: #64748b;
+    font-size: 0.75em;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 10px;
+}
+/* Responsive */
+@media (max-width: 600px) {
+    body { padding: 12px; }
+    .header h1 { font-size: 1.6em; }
+    .card .value { font-size: 1.4em; }
+    table { font-size: 0.8em; }
+    td, th { padding: 10px 10px; }
+    .overview-grid { grid-template-columns: 1fr; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+    <h1>₿ Crypto News Digest</h1>
+    <div class="subtitle">📉 Điều chỉnh nhẹ &bull; -0.83% 24h</div>
+    <div class="time">⏰ Greed &bull; 65/100 &bull; Cập nhật: 26/08/2026 08:00</div>
+</div>
+
+<!-- OVERVIEW: BTC + ETH -->
+<div class="overview-grid">
+
+    <div class="card">
+        <div class="icon">₿</div>
+        <div class="label">Bitcoin (BTC)</div>
+        <div class="value">$78,422</div>
+        <div class="change down">-0.83% &bull; Vol $32.12B</div>
+    </div>
+
+    <div class="card">
+        <div class="icon">⟠</div>
+        <div class="label">Ethereum (ETH)</div>
+        <div class="value">$2,447.22</div>
+        <div class="change down">-1.02% &bull; Vol $12.01B</div>
+    </div>
+
+    <div class="card">
+        <div class="icon">◎</div>
+        <div class="label">Solana (SOL)</div>
+        <div class="value">$96.14</div>
+        <div class="change down">-3.57% &bull; Vol $3.49B</div>
+    </div>
+
+    <div class="card">
+        <div class="icon">✕</div>
+        <div class="label">XRP</div>
+        <div class="value">$1.41</div>
+        <div class="change down">-4.63% &bull; Vol $3.28B</div>
+    </div>
+
+</div>
+
+<!-- TOP 10 TABLE -->
+<div class="section-title">🏆 Top 10 Cryptocurrencies</div>
+<div class="table-wrap">
+<table>
+<thead>
+<tr>
+    <th>#</th>
+    <th>Coin</th>
+    <th class="text-right">Giá (USD)</th>
+    <th class="text-right">Vốn hóa</th>
+    <th class="text-right">KLGD 24h</th>
+    <th class="text-right">24h</th>
+</tr>
+</thead>
+<tbody>
+
+<tr>
+    <td>1</td>
+    <td><span class="coin-name">₿ Bitcoin</span><span class="coin-symbol">BTC</span></td>
+    <td class="text-right price">$78,422.00</td>
+    <td class="text-right">$1.57T</td>
+    <td class="text-right">$32.12B</td>
+    <td class="text-right down">-0.83%</td>
+</tr>
+
+<tr>
+    <td>2</td>
+    <td><span class="coin-name">⟠ Ethereum</span><span class="coin-symbol">ETH</span></td>
+    <td class="text-right price">$2,447.22</td>
+    <td class="text-right">$295.33B</td>
+    <td class="text-right">$12.01B</td>
+    <td class="text-right down">-1.02%</td>
+</tr>
+
+<tr>
+    <td>3</td>
+    <td><span class="coin-name">✕ XRP</span><span class="coin-symbol">XRP</span></td>
+    <td class="text-right price">$1.41</td>
+    <td class="text-right">$88.48B</td>
+    <td class="text-right">$3.28B</td>
+    <td class="text-right down">-4.63%</td>
+</tr>
+
+<tr>
+    <td>4</td>
+    <td><span class="coin-name">◎ Solana</span><span class="coin-symbol">SOL</span></td>
+    <td class="text-right price">$96.14</td>
+    <td class="text-right">$56.08B</td>
+    <td class="text-right">$3.49B</td>
+    <td class="text-right down">-3.57%</td>
+</tr>
+
+<tr>
+    <td>5</td>
+    <td><span class="coin-name">◈ TRON</span><span class="coin-symbol">TRX</span></td>
+    <td class="text-right price">$0.3366</td>
+    <td class="text-right">$31.94B</td>
+    <td class="text-right">$555.16M</td>
+    <td class="text-right down">-1.63%</td>
+</tr>
+
+<tr>
+    <td>6</td>
+    <td><span class="coin-name">Ð Dogecoin</span><span class="coin-symbol">DOGE</span></td>
+    <td class="text-right price">$0.0859</td>
+    <td class="text-right">$13.38B</td>
+    <td class="text-right">$692.67M</td>
+    <td class="text-right down">-4.92%</td>
+</tr>
+
+<tr>
+    <td>7</td>
+    <td><span class="coin-name">⬡ Chainlink</span><span class="coin-symbol">LINK</span></td>
+    <td class="text-right price">$11.27</td>
+    <td class="text-right">$8.43B</td>
+    <td class="text-right">$371.49M</td>
+    <td class="text-right down">-2.44%</td>
+</tr>
+
+<tr>
+    <td>8</td>
+    <td><span class="coin-name">◉ Monero</span><span class="coin-symbol">XMR</span></td>
+    <td class="text-right price">$444.34</td>
+    <td class="text-right">$8.35B</td>
+    <td class="text-right">$91.54M</td>
+    <td class="text-right up">+0.17%</td>
+</tr>
+
+<tr>
+    <td>9</td>
+    <td><span class="coin-name">₳ Cardano</span><span class="coin-symbol">ADA</span></td>
+    <td class="text-right price">$0.2089</td>
+    <td class="text-right">$7.83B</td>
+    <td class="text-right">$390.95M</td>
+    <td class="text-right down">-4.25%</td>
+</tr>
+
+<tr>
+    <td>10</td>
+    <td><span class="coin-name">☆ Stellar</span><span class="coin-symbol">XLM</span></td>
+    <td class="text-right price">$0.1832</td>
+    <td class="text-right">$6.34B</td>
+    <td class="text-right">$201.98M</td>
+    <td class="text-right down">-4.68%</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- STATS ROW -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="label">🏦 Tổng Market Cap</div>
+        <div class="value" style="color:#67e8f9;">$2.10T</div>
+        <div class="sub">Top 16 coins</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">₿ BTC Dominance</div>
+        <div class="value" style="color:#f7931a;">74.8%</div>
+        <div class="sub">$1.57T</div>
+    </div>
+    <div class="stat-card">
+        <div class="label">😱 Fear & Greed</div>
+        <div class="value" style="color:#fbbf24;">65 Greed</div>
+        <div class="sub">Hôm qua: 74 &bull; 🔴</div>
+    </div>
+</div>
+
+<!-- NEWS -->
+<div class="section-title">🔥 Tin nổi bật</div>
+<div class="news-list">
+
+    <div class="news-item">
+        <span class="news-badge badge-ct">CT</span>
+        <div class="news-title"><a href="https://cointelegraph.com/news/revolut-eurr-euro-stablecoin-europe-rollout?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound" target="_blank" rel="noopener">Revolut rolls out euro stablecoin in three European markets</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-cd">CD</span>
+        <div class="news-title"><a href="https://www.coindesk.com/markets/2026/08/25/a-massive-usd6-4-billion-bitcoin-options-expiry-on-friday-could-amplify-volatility" target="_blank" rel="noopener">A massive $6.4 billion bitcoin options expiry on Friday could amplify volatility</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-ct">CT</span>
+        <div class="news-title"><a href="https://cointelegraph.com/news/roman-storm-retrial-delayed-april-2027?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound" target="_blank" rel="noopener">Tornado Cash developer Roman Storm’s retrial delayed to April 2027</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-ct">CT</span>
+        <div class="news-title"><a href="https://cointelegraph.com/news/bitcoin-etf-august-inflows-surge-past-3-billion?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound" target="_blank" rel="noopener">Bitcoin ETFs tear through 2026 outflows in 7-day hot streak</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-ct">CT</span>
+        <div class="news-title"><a href="https://cointelegraph.com/news/what-happened-in-crypto-today?utm_source=rss_feed&utm_medium=rss&utm_campaign=rss_partner_inbound" target="_blank" rel="noopener">Here’s what happened in crypto today</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-cd">CD</span>
+        <div class="news-title"><a href="https://www.coindesk.com/markets/2026/08/26/E" target="_blank" rel="noopener">BlackRock cuts bitcoin ETF swap minimum to $1 million: Report</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-cd">CD</span>
+        <div class="news-title"><a href="https://www.coindesk.com/markets/2026/08/26/xrp-s-44-rally-brings-leverage-back-raising-risk-of-sharper-pullback" target="_blank" rel="noopener">XRP’s 44% rally brings leverage back, raising risk of sharper pullback</a></div>
+    </div>
+
+    <div class="news-item">
+        <span class="news-badge badge-cd">CD</span>
+        <div class="news-title"><a href="https://www.coindesk.com/markets/2026/08/26/crypto-greed-gauge-hits-highest-since-just-before-october-s-usd19-billion-wipeout" target="_blank" rel="noopener">Crypto greed gauge hits highest since just before October’s $19 billion wipeout</a></div>
+    </div>
+
+</div>
+
+<!-- INVESTMENT OPPORTUNITIES -->
+<div class="section-title">🎯 Danh mục đầu tư tiềm năng</div>
+<div class="investment-grid">
+    <div class="inv-card">
+        <div class="coin-header">₿ Bitcoin (BTC)</div>
+        <div class="reason"><strong>Lý do:</strong> BTC đang giữ vững $78K sau khi ETFs ghi nhận dòng vào mạnh nhất năm. Ngưỡng $83K là key resistance theo CryptoQuant. Options expiry $6.4B vào thứ Sáu có thể tạo biến động.</div>
+        <div class="risk">⚠️ Rủi ro: Thị trường đang ở Greed (65) — cao hơn hôm qua (74→65). Pullback có thể xảy ra nếu không vượt $83K.</div>
+    </div>
+    <div class="inv-card">
+        <div class="coin-header">⟠ Ethereum (ETH)</div>
+        <div class="reason"><strong>Lý do:</strong> ETH đang giao dịch ở $2,447 với volume ổn định. Hệ sinh thái DeFi và L2 tiếp tục mở rộng. Arbitrum và Optimism cùng điều chỉnh nhẹ (−3.7%, −2.9%).</div>
+        <div class="risk">⚠️ Rủi ro: ETH giảm 1% trong 24h qua, yếu hơn BTC. Nếu mất $2,400 có thể test lại $2,300.</div>
+    </div>
+    <div class="inv-card">
+        <div class="coin-header">▲ Avalanche (AVAX)</div>
+        <div class="reason"><strong>Lý do:</strong> POSCO (tập đoàn thương mại Hàn Quốc) đưa trade receivables lên Avalanche — tín hiệu tokenization tích cực. AVAX giảm nhẹ −2.8%, vẫn trên $7.3.</div>
+        <div class="risk">⚠️ Rủi ro: Khối lượng giao dịch thấp ($194M). Cần catalyst mạnh hơn để breakout.</div>
+    </div>
+    <div class="inv-card">
+        <div class="coin-header">◈ TRON (TRX)</div>
+        <div class="reason"><strong>Lý do:</strong> TRX giảm nhẹ nhất trong top 10 (−1.6%), vốn hóa $31.9B. Stablecoin ecosystem và USDT trên TRON tiếp tục tăng trưởng.</div>
+        <div class="risk">⚠️ Rủi ro: Biến động thấp — phù hợp hold dài hạn hơn là trade ngắn.</div>
+    </div>
+</div>
+
+<div class="disclaimer">
+    ⚠️ <strong>Disclaimer:</strong> Đây là phân tích tham khảo, không phải lời khuyên đầu tư. Thị trường crypto có biến động mạnh. Luôn tự nghiên cứu (DYOR) trước khi quyết định đầu tư.
+</div>
+
+<!-- ANALYSIS -->
+<div class="analysis">
+    <h3>🔮 Nhận định thị trường</h3>
+    <p>
+        Thị trường đang trong giai đoạn <strong>điều chỉnh nhẹ</strong> sau một tuần tăng mạnh. 
+        BTC giữ vững $78K sau khi ETFs ghi nhận dòng vào $3B+ trong 7 ngày qua. 
+        Khối lượng giao dịch 24h đạt $32.1B — thanh khoản ổn định.
+    </p>
+    <p>
+        <span class="tag">Kịch bản 1 — Tích cực</span><br>
+        Nếu BTC vượt $83K (CryptoQuant key resistance), thị trường có thể bước vào "initial phase of new bull market". 
+        $6.4B options expiry vào thứ Sáu có thể là catalyst kích hoạt sóng tăng.
+    </p>
+    <p>
+        <span class="tag">Kịch bản 2 — Trung tính</span><br>
+        BTC dao động $75K-$82K khi thị trường hấp thụ gains tuần trước. 
+        Fear & Greed giảm từ 74 → 65 cho thấy tâm lý đang hạ nhiệt, có thể tạo nền cho sóng mới.
+    </p>
+    <p>
+        <span class="tag">Kịch bản 3 — Tiêu cực</span><br>
+        Nếu XRP (đã tăng 44% gần đây) pullback mạnh, có thể kéo theo toàn thị trường. 
+        Greed gauge ở 65 vẫn là mức cao — lịch sử cho thấy các đỉnh Greed thường báo hiệu điều chỉnh.
+    </p>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <p>Nô Tì &bull; Crypto News Digest &bull; 08:00 &bull; 12:00 &bull; 17:00 &bull; 21:00</p>
+</div>
+<div class="source">
+    📊 Dữ liệu giá từ <a href="https://www.coingecko.com" target="_blank">CoinGecko API</a> &bull; 
+    😱 Fear & Greed từ <a href="https://alternative.me" target="_blank">Alternative.me</a> &bull;
+    🔥 Tin tức từ CoinTelegraph &amp; CoinDesk RSS
+</div>
+</div>
+</body>
+</html>
